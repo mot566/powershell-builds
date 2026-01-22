@@ -1,0 +1,27 @@
+<Configuration ID="1ce3f3fe-a41e-4690-81da-9a2ed3b7e990">
+<Add OfficeClientEdition="64" Channel="PerpetualVL2024">
+<Product ID="Standard2024Volume">
+<Language ID="de-DE"/>
+<ExcludeApp ID="OneDrive"/>
+<ExcludeApp ID="Publisher"/>
+<ExcludeApp ID="Word"/>
+<ExcludeApp ID="Excel"/>
+<ExcludeApp ID="Powerpoint"/>
+<ExcludeApp ID="Access"/>
+<ExcludeApp ID="OneNote"/>
+</Product>
+</Add>
+<Property Name="SharedComputerLicensing" Value="1"/>
+<Property Name="FORCEAPPSHUTDOWN" Value="FALSE"/>
+<Property Name="DeviceBasedLicensing" Value="0"/>
+<Property Name="SCLCacheOverride" Value="0"/>
+<Updates Enabled="FALSE"/>
+<RemoveMSI/>
+<AppSettings>
+<Setup Name="Company" Value="Kessler Co AG"/>
+<User Key="software\microsoft\office\16.0\excel\options" Name="defaultformat" Value="51" Type="REG_DWORD" App="excel16" Id="L_SaveExcelfilesas"/>
+<User Key="software\microsoft\office\16.0\powerpoint\options" Name="defaultformat" Value="27" Type="REG_DWORD" App="ppt16" Id="L_SavePowerPointfilesas"/>
+<User Key="software\microsoft\office\16.0\word\options" Name="defaultformat" Value="" Type="REG_SZ" App="word16" Id="L_SaveWordfilesas"/>
+</AppSettings>
+<Display Level="Full" AcceptEULA="TRUE"/>
+</Configuration>
