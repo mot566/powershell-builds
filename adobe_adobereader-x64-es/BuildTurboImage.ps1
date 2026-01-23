@@ -64,7 +64,7 @@ $Versions = $ReaderCatalog.SystemsManagementCatalog.SoftwareDistributionPackage.
 $Version = $Versions[0] -Replace ('\.','')
 
 ## Create download link for Reader
-$DownloadLink = "https://ardownload2.adobe.com/pub/adobe/acrobat/win/AcrobatDC/" + $Version + "/AcroRdrDCx64" + $Version + "_de_DE.exe"
+$DownloadLink = "https://ardownload2.adobe.com/pub/adobe/acrobat/win/AcrobatDC/" + $Version + "/AcroRdrDCx64" + $Version + "_es_ES.exe"
 
 # Name of the downloaded installer file
 $InstallerName = "AcroRdrDCx64.exe"
