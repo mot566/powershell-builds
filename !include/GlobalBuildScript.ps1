@@ -1,4 +1,4 @@
-﻿#######################
+#######################
 ## General Variables ##
 #######################
 $BuildScriptPath = $PSScriptRoot # The folder path the script was launched from
@@ -15,30 +15,49 @@ $DownloadPath = New-Item -Path $packagePath -Name "Installer" -ItemType "directo
 ## Turbo Variables ##
 #####################
 
-$turboPath    = "C:\Program Files (x86)\Turbo.net"
-$openTextPath = "C:\Program Files (x86)\Opentext"
+# Sucht XStudio.exe in beiden möglichen Installationspfaden und setzt $XStudio entsprechend
+function Resolve-XStudioPath {
+    [OutputType([string])]
+    param()
 
-$XStudio = $null
+    $candidateRoots = @(
+        "C:\Program Files (x86)\Turbo.net",
+        "C:\Program Files (x86)\OpenText\Hybrid Workspaces Studio 26"
+    )
 
-if (Test-Path $turboPath) {
-    $XStudio = Get-ChildItem -Path $turboPath -Filter "XStudio.exe" -File -Recurse -ErrorAction SilentlyContinue |
-               Select-Object -ExpandProperty FullName -First 1
-}
-elseif (Test-Path $openTextPath) {
-    $XStudio = Get-ChildItem -Path $openTextPath -Filter "XStudio.exe" -File -Recurse -ErrorAction SilentlyContinue |
-               Select-Object -ExpandProperty FullName -First 1
+    foreach ($root in $candidateRoots) {
+        if (Test-Path -Path $root) {
+            try {
+                $exe = Get-ChildItem -Path $root -Recurse -Filter "XStudio.exe" -File -ErrorAction Stop |
+                       Select-Object -First 1 -ExpandProperty FullName
+                if ($exe) { return $exe }
+            } catch {
+                # Ignorieren und nächsten Kandidaten prüfen
+            }
+        }
+    }
+
+    return $null
 }
 
-if (-not $XStudio) {
-    throw "XStudio.exe wasn't found. Please install Studio"
+$XStudio = Resolve-XStudioPath
+
+if ([string]::IsNullOrWhiteSpace($XStudio)) {
+    Write-Host "Fehler: Konnte XStudio.exe weder unter 'C:\Program Files (x86)\Turbo.net' noch unter 'C:\Program Files (x86)\OpenText\Hybrid Workspaces Studio 26' finden."
+    Write-Host "Bitte prüfe die Installation und Pfade oder passe die Suchpfade im Skript an."
+    exit 1
+} else {
+    Write-Host "XStudio gefunden unter: $XStudio"
 }
- 
-$Turbo = "C:\Program Files (x86)\Turbo\Cmd\turbo.exe" # The path to Turbo.exe
-$TurboCaptureDir = "$packagePath\TurboCapture"  # The folder that the Turbo capture will be saved to
-$XapplPath = "$TurboCaptureDir\Capture.xappl"  #  Path to the captured XAPPL file
-$SVM = "$TurboCaptureDir\build.svm"  # Path to the Turbo SVM build
-$TurboLicense = "$BuildScriptPath\License.txt"  # Path to the Turbo Studio license file
-$FinalXapplPath = "$TurboCaptureDir\FinalCapture.xappl"  #  XAPPL with any modifications applied
+
+# Falls weiterhin benötigt: Standardpfad zur Turbo-CLI
+$Turbo = "C:\Program Files (x86)\Turbo\Cmd\turbo.exe"   # bleibt unverändert
+$TurboCaptureDir = "$packagePath\TurboCapture"
+$XapplPath = "$TurboCaptureDir\Capture.xappl"
+$SVM = "$TurboCaptureDir\build.svm"
+$TurboLicense = "$BuildScriptPath\License.txt"
+$FinalXapplPath = "$TurboCaptureDir\FinalCapture.xappl"
+
 
 ###############
 ## Functions ##
