@@ -39,7 +39,7 @@ if (-not $elevated) {
 $HubOrg = (Split-Path $scriptPath -Leaf) -replace '_', '/' # Set the repo name based on the folder path of the script assuming the folder is vendor_appname
 $Vendor = "Mozilla"
 $AppDesc = "Mozillas popular open source browser enhanced for performance, privacy, and functionality."
-$AppName = "Firefox ESR 64-bit"
+$AppName = "Firefox ESR 64-bit (de)"
 $VendorURL = "https://www.mozilla.org/de-DE/firefox/new/"
 
 ########################################
