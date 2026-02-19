@@ -39,7 +39,7 @@ if (-not $elevated) {
 $HubOrg = (Split-Path $scriptPath -Leaf) -replace '_', '/' # Set the repo name based on the folder path of the script assuming the folder is vendor_appname
 $Vendor = "Adobe"
 $AppDesc = "View, print, search, sign, verify, and collaborate on PDF documents."
-$AppName = "Acrobat Reader"
+$AppName = "Acrobat Reader (de)"
 $VendorURL = "https://adobe.com"
 
 ########################################
